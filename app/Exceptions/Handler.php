@@ -8,6 +8,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Laravel\Lumen\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Illuminate\Validation\UnauthorizedException;
 
 class Handler extends ExceptionHandler
 {
@@ -21,6 +22,7 @@ class Handler extends ExceptionHandler
         HttpException::class,
         ModelNotFoundException::class,
         ValidationException::class,
+        UnauthorizedException::class,
     ];
 
     /**
@@ -45,6 +47,44 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
-        return parent::render($request, $e);
+        $status = 400;
+        $error = [
+            'message' => $e->getMessage(),
+            'status' => $status,
+        ];
+
+        switch (true) {
+            case is_a($e, ModelNotFoundException::class): {
+                $status = 404;
+                $error = [
+                    'message' => 'The item was not found.',
+                    'status' => $status,
+                ];
+
+                break;
+            }
+            case is_a($e, HttpException::class): {
+                $status = 400;
+                $error = [
+                    'message' => 'Incorrect request.',
+                    'status' => $status,
+                ];
+
+                break;
+            }
+            case is_a($e, UnauthorizedException::class): {
+                $status = 401;
+                $error = [
+                    'message' => 'Unauthorized.',
+                    'status' => $status,
+                ];
+
+                break;
+            }
+        }
+        
+        return response()->json([
+            'error' => $error,
+        ], $status);
     }
 }

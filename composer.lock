@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d7ca23bfe3adecc3beda85d197db4a0b",
+    "content-hash": "4d43a6ba15fc2b9c9bf1a9cd1ddacacc",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -2308,6 +2308,41 @@
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
             "time": "2019-02-23T15:06:07+00:00"
+        },
+        {
+            "name": "urameshibr/lumen-form-request",
+            "version": "1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/urameshibr/lumen-form-request.git",
+                "reference": "5fe592938be3df71f3b08d4326d570d406f6d0b4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/urameshibr/lumen-form-request/zipball/5fe592938be3df71f3b08d4326d570d406f6d0b4",
+                "reference": "5fe592938be3df71f3b08d4326d570d406f6d0b4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6.4"
+            },
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "Urameshibr\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Laravel Form Request adaptation for Lumen framework.",
+            "keywords": [
+                "form",
+                "lumen",
+                "request"
+            ],
+            "time": "2017-09-11T13:15:11+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
