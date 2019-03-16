@@ -31,6 +31,12 @@ class UserController extends Controller
         );
     }
 
+    /**
+     * Create a user
+     *
+     * @param CreateRequest $request
+     * @return mixed
+     */
     public function create(CreateRequest $request)
     {
         $user = new User([
@@ -46,6 +52,13 @@ class UserController extends Controller
         );
     }
 
+    /**
+     * Get user details by id
+     *
+     * @param GetByIdRequest $request
+     * @param string $encodedUserId
+     * @return mixed
+     */
     public function getUserById(GetByIdRequest $request, string $encodedUserId)
     {
         if ($user = User::findOrFail($encodedUserId)) {
@@ -55,6 +68,13 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * Update user
+     *
+     * @param UpdateRequest $request
+     * @param string $encodedUserId
+     * @return mixed
+     */
     public function update(UpdateRequest $request, string $encodedUserId)
     {
         if ($user = User::findOrFail($encodedUserId)) {
@@ -69,6 +89,13 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * Delete the user
+     *
+     * @param DeleteRequest $request
+     * @param string $encodedUserId
+     * @return mixed
+     */
     public function delete(DeleteRequest $request, string $encodedUserId)
     {
         if ($user = User::findOrFail($encodedUserId)) {
@@ -79,6 +106,14 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * Add a group to user
+     *
+     * @param ManageUserGroupRequest $request
+     * @param string $encodedUserId
+     * @param string $encodedGroupId
+     * @return mixed
+     */
     public function addToGroup(
         ManageUserGroupRequest $request,
         string $encodedUserId,
@@ -93,6 +128,14 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * Remove a group from user
+     *
+     * @param ManageUserGroupRequest $request
+     * @param string $encodedUserId
+     * @param string $encodedGroupId
+     * @return mixed
+     */
     public function removeFromGroup(
         ManageUserGroupRequest $request,
         string $encodedUserId,

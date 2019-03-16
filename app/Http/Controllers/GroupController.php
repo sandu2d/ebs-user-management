@@ -19,7 +19,7 @@ class GroupController extends Controller
         GroupMap;
 
     /**
-     * Users list
+     * Groups list
      *
      * @return mixed
      */
@@ -30,6 +30,12 @@ class GroupController extends Controller
         );
     }
 
+    /**
+     * Create a group
+     *
+     * @param CreateRequest $request
+     * @return mixed
+     */
     public function create(CreateRequest $request)
     {
         $group = new Group([
@@ -43,6 +49,13 @@ class GroupController extends Controller
         );
     }
 
+    /**
+     * Get group by id
+     *
+     * @param GetByIdRequest $request
+     * @param string $encodedGroupId
+     * @return mixed
+     */
     public function getById(GetByIdRequest $request, string $encodedGroupId)
     {
         if ($group = Group::findOrFail($encodedGroupId)) {
@@ -52,6 +65,13 @@ class GroupController extends Controller
         }
     }
 
+    /**
+     * Update the group by id
+     *
+     * @param UpdateRequest $request
+     * @param string $encodedGroupId
+     * @return mixed
+     */
     public function update(UpdateRequest $request, string $encodedGroupId)
     {
         if ($group = Group::findOrFail($encodedGroupId)) {
@@ -65,6 +85,13 @@ class GroupController extends Controller
         }
     }
 
+    /**
+     * Delete a group
+     *
+     * @param DeleteRequest $request
+     * @param string $encodedGroupId
+     * @return mixed
+     */
     public function delete(DeleteRequest $request, string $encodedGroupId)
     {
         if ($group = Group::findOrFail($encodedGroupId)) {
@@ -76,6 +103,13 @@ class GroupController extends Controller
         }
     }
 
+    /**
+     * Sync the group`s permissions
+     *
+     * @param SyncPermissionsRequest $request
+     * @param string $encodedGroupId
+     * @return mixed
+     */
     public function syncPermissions(SyncPermissionsRequest $request, string $encodedGroupId)
     {
         if ($group = Group::findOrFail($encodedGroupId)) {

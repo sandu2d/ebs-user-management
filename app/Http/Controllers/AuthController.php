@@ -18,6 +18,12 @@ class AuthController extends Controller
     use ControllerHelper,
         UserMap;
 
+    /**
+     * Register a new user
+     *
+     * @param RegisterRequest $request
+     * @return mixed
+     */
     public function register(RegisterRequest $request)
     {
         $user = new User([
@@ -33,6 +39,12 @@ class AuthController extends Controller
         ]);
     }
 
+    /**
+     * Login the user
+     *
+     * @param LoginRequest $request
+     * @return mixed
+     */
     public function login(LoginRequest $request)
     {
         if ($user = User::where([
@@ -40,19 +52,23 @@ class AuthController extends Controller
         ])->first()) {
             if (Crypt::decrypt($user->password) === $request->user['password']) {
 
-                if ($user->isBlocked()) {
-                    throw new UnauthorizedException();
+                if (!$user->isBlocked()) {
+                    return $this->json([
+                        'token' => $this->generateToken($user),
+                    ]);
                 }
-
-                return $this->json([
-                    'token' => $this->generateToken($user),
-                ]);
             }
         }
 
-        return 0;
+        throw new UnauthorizedException();
     }
 
+    /**
+     * Generate the user`s token
+     *
+     * @param User $user
+     * @return string
+     */
     private function generateToken(User $user): string
     {
         if ($token = $user->token) {
@@ -70,6 +86,12 @@ class AuthController extends Controller
         return $token->getToken();
     }
 
+    /**
+     * Get user`s details
+     *
+     * @param Request $request
+     * @return mixed
+     */
     public function getDetails(Request $request)
     {
         return $this->json(

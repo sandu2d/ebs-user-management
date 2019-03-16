@@ -14,7 +14,7 @@ class PermisionController extends Controller
         PermissionMap;
 
     /**
-     * Users list
+     * Permissions list
      *
      * @return mixed
      */
