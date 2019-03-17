@@ -99,4 +99,17 @@ class AuthController extends Controller
             $this->map($request->user())
         );
     }
+
+    /**
+     * Logout the current user
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function logout(Request $request)
+    {
+        $request->user()->token()->delete();
+
+        return $this->json([], 200);
+    }
 }

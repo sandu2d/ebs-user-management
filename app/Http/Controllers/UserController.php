@@ -124,7 +124,7 @@ class UserController extends Controller
     ) {
         if ($user = User::findOrFail($encodedUserId)) {
             if ($group = Group::findOrFail($encodedGroupId)) {
-                $user->groups()->sync($group->getId(), false);
+                $user->groups()->sync($group->getId());
     
                 return $this->json([], 200);
             }

@@ -42,6 +42,11 @@ $router->group(['prefix' => 'v1'], function () use ($router) {
             'middleware' => 'auth',
             'uses' => 'AuthController@getDetails',
         ]);
+
+        $router->delete('/logout', [
+            'middleware' => 'auth',
+            'uses' => 'AuthController@logout',
+        ]);
     });
     
     $router->group(['prefix' => 'permissions', 'middleware' => 'auth'], function () use ($router) {
