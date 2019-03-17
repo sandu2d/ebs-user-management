@@ -26,6 +26,8 @@ trait UserMap
             'name' => $user->getName(),
             'email' => $user->getEmail(),
             'groups' => $this->groupMapList($user->groups, 'groupMap'),
+            'activated' => $user->isActivated(),
+            'blocked' => $user->isblocked(),
         ];
     }
 

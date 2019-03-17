@@ -11,6 +11,8 @@ use App\Http\Requests\Users\GetByIdRequest;
 use App\Http\Requests\Users\UpdateRequest;
 use App\Http\Requests\Users\DeleteRequest;
 use App\Http\Requests\Users\ManageUserGroupRequest;
+use App\Http\Requests\Users\ActivateRequest;
+use App\Http\Requests\Users\BlockRequest;
 use Illuminate\Support\Facades\Crypt;
 use App\Models\Group;
 
@@ -43,6 +45,7 @@ class UserController extends Controller
             'name' => $request->user['name'],
             'email' => $request->user['email'],
             'password' => Crypt::encrypt($request->user['password']),
+            'activated' => false,
         ]);
 
         $user->save();
@@ -147,6 +150,44 @@ class UserController extends Controller
     
                 return $this->json([], 200);
             }
+        }
+    }
+
+    /**
+     * Change user`s activated status
+     *
+     * @param ActivateRequest $request
+     * @param string $encodedUserId
+     * @return mixed
+     */
+    public function changeActivateStatus(ActivateRequest $request, string $encodedUserId)
+    {
+        if ($user = User::findOrFail($encodedUserId)) {
+            $user->setActivatedValue((bool) $request->user['status']);
+            $user->save();
+
+            return $this->json(
+                $this->map($user)
+            );
+        }
+    }
+
+    /**
+     * Change user`s blocked status
+     *
+     * @param BlockRequest $request
+     * @param string $encodedUserId
+     * @return mixed
+     */
+    public function changeBlockStatus(BlockRequest $request, string $encodedUserId)
+    {
+        if ($user = User::findOrFail($encodedUserId)) {
+            $user->setBlockedValue((bool) $request->user['status']);
+            $user->save();
+
+            return $this->json(
+                $this->map($user)
+            );
         }
     }
 }

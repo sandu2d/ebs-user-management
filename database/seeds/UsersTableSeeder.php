@@ -18,6 +18,7 @@ class UsersTableSeeder extends Seeder
             'name' => 'Admin',
             'email' => 'admin@mail.com',
             'password' => 'secret',
+            'activated' => true,
         ]);
 
         $user->groups()->sync(
@@ -31,6 +32,7 @@ class UsersTableSeeder extends Seeder
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Crypt::encrypt($data['password']),
+            'activated' => $data['activated'],
         ]);
 
         $user->save();

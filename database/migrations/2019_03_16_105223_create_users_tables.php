@@ -19,6 +19,7 @@ class CreateUsersTables extends Migration
             $table->string('email');
             $table->string('password');
             $table->boolean('blocked')->default(false);
+            $table->boolean('activated')->default(false);
             $table->integer('created_at')->unsigned();
             $table->integer('updated_at')->unsigned();
         });

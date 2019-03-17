@@ -30,6 +30,7 @@ class AuthController extends Controller
             'name' => $request->user['name'],
             'email' => $request->user['email'],
             'password' => Crypt::encrypt($request->user['password']),
+            'activated' => false,
         ]);
 
         $user->save();

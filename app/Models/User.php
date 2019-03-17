@@ -26,6 +26,7 @@ class User extends Model
         'name',
         'email',
         'password',
+        'activated',
     ];
 
     /**
@@ -113,17 +114,51 @@ class User extends Model
             ->join('group_permissions', 'group_permissions.permission_id', 'permissions.id')
             ->whereIn('group_permissions.group_id',
                 $this->groups()->pluck('groups.id')->toArray()
-            )->get());
+            )->get()) && $this->isActivated();
     }
 
+    /**
+     * Check if user was blocked
+     *
+     * @return boolean
+     */
     public function isBlocked(): bool
     {
         return (bool) $this->blocked;
     }
 
+    /**
+     * Change user`s blocked status
+     *
+     * @param boolean $status
+     * @return User
+     */
     public function setBlockedValue(bool $status): User
     {
         $this->blocked = $status;
+
+        return $this;
+    }
+
+    /**
+     * Check if user`s account was activated
+     *
+     * @return boolean
+     */
+    public function isActivated(): bool
+    {
+        return (bool) $this->activated;
+    }
+
+    /**
+     * Change user`s activated status
+     *
+     * @param boolean $status
+     * @return User
+     */
+    public function setActivatedValue(bool $status): User
+    {
+        $this->activated = $status;
 
         return $this;
     }
